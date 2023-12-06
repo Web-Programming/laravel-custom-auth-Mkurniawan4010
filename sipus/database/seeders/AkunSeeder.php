@@ -45,4 +45,4 @@ class AkunSeeder extends Seeder
             User::create($value);
         }
     }
-}
+};
