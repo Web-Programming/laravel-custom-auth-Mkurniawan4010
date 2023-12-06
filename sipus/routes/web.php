@@ -60,6 +60,6 @@ Route::delete('/prodi/{prodi}', [ProdiController::class, 'destroy'])->name('prod
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/prodi', [ProdiController::class,'index'])->name('prodi.index')->middleware('auth');
 
 
