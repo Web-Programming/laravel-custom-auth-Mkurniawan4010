@@ -67,6 +67,9 @@ class AuthController extends Controller
         return redirect('login')
             ->withInput()
             ->withErrors(['login_gagal'=>'These credentials does not match our records']);
+
+
+
      }
 
      public function register(){

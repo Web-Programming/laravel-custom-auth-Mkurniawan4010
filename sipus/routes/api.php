@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\Api\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProdiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register',[RegisterController::class, 'register']);
-Route::post('/login',[RegiterController::class,'login']);
+Route::post('register', [RegisterController::class, 'register']);
+Route::post('login', [RegisterController::class, 'login']);
 
-Route::group(['middelware' => ['anth']],
-function (){
-    Route::apiResource("prodi",ProdiController::class);
-});
+
+Route::middleware('auth:sanctum')->get('/prodi', [ProdiController::class, 'index']);
+Route::middleware('auth:sanctum')->post('/prodi/store', [ProdiController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/prodi/update/{id}', [ProdiController::class, 'update']);
+Route::middleware('auth:sanctum')->post('/prodi/delete/{id}', [ProdiController::class, 'delete']);

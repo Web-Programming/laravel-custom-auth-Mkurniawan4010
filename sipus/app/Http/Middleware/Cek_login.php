@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
-class Cek_login
+class Cek_Login
 {
     /**
      * Handle an incoming request.
@@ -16,19 +16,16 @@ class Cek_login
      */
     public function handle(Request $request, Closure $next, $roles): Response
     {
-        // cek sudah login atau belum . jika belum kembali ke halaman login
-       if(!Auth::check()){
-        return redirect('login');
-       }
-    //    simpan data user pada variabel $user
-       $user = Auth::user();
+        if(!Auth::check()){
+            return redirect('login');
+        }
 
-    //    jika user memiliki level sesuai pada kolom pada lanjutkan request
-       if($user->level == $roles){
-         return $next($request);
-       }
-       
-    //    jika tidak memiliki akses maka kembalikan ke halaman login
-        return redirect('login')->with('error','Maaf anda tidak memiliki akses');
+        $user = Auth::user();
+
+        if($user->level == $roles){
+            return $next($request);
+        }
+
+        return redirect('login')->with('Error', 'Maaf anda tidak memiliki akses');
     }
 }
